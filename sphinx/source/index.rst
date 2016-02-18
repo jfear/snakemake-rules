@@ -9,7 +9,7 @@ snakemake-rules - a library of snakemake rules
 .. _about:
 
 
-`Snakemake <https://bitbucket.org/johanneskoester/snakemake/wiki/Home>`__
+`Snakemake <https://bitbucket.org/johanneskoester/snakemake/wiki/Home>`_
 library for various applications, with a focus on bioinformatics and
 next-generation sequencing.
 
@@ -27,7 +27,7 @@ be of general interest.
 
 
 Features
-^^^^^^^^
+---------
 
 1. **Rule library**. snakemake-rules is just a library of snakemake
    rules. At the very least, if rules need to be tweaked, the rule
@@ -49,13 +49,17 @@ Features
 
 
 
-Contents
----------
-
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
    docs/quickstart
    docs/configuration
    docs/examples
+   docs/resources
+
+.. toctree::
+   :hidden:
+
+   docs/troubleshooting
    docs/release_notes
+
