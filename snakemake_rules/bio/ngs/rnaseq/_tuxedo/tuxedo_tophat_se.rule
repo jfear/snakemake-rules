@@ -2,6 +2,7 @@
 config_default = {
     'bio.ngs.rnaseq.tuxedo' : {
         'tophat' : {
+            'cmd': 'tophat2' if config['bio.ngs.rnaseq.tuxedo']['version2'] else 'tophat', 
             'options' : '',
             'threads' : config['bio.ngs.settings']['threads'],
             'output_dir' : os.path.join(os.curdir, "tophat_out"),
@@ -13,12 +14,12 @@ update_config(config_default, config)
 config = config_default
 
 
-rule tuxedo_tophat:
+rule tuxedo_tophat_se:
     """Run tophat paired end alignment.
     NB: requires python2 so need to activate a virtual environment or
     the like to run.
     """
-    params: cmd = 'tophat2' if config['bio.ngs.rnaseq.tuxedo']['version2'] else 'tophat',
+    params: cmd = config['bio.ngs.rnaseq.tuxedo']['tophat']['cmd'],
             options = config['bio.ngs.rnaseq.tuxedo']['tophat']['options'],
             index = str(config['bio.ngs.rnaseq.tuxedo']['index']),
             outdir = config['bio.ngs.rnaseq.tuxedo']['tophat']['output_dir'],
@@ -30,5 +31,5 @@ rule tuxedo_tophat:
     threads: config['bio.ngs.rnaseq.tuxedo']['tophat']['threads']
     run: 
         rg = config['bio.ngs.rnaseq.tuxedo']['rg_fn'](wildcards.prefix)
-        shell("{python2} {cmd} -p {threads} {opt} {rg} -o {out}.tmp {index} {read1} 2> {out}.log && mv {out}.tmp/* {out} && mv {out}.log {out}".format(python2=params.python2, cmd=params.cmd, opt=params.options, rg=rg, out=output.tophatdir, prefix=wildcards.prefix, index=params.index, read1=input.read1))
+        shell("{python2} {cmd} -p {threads} {opt} {rg} -o {out}.tmp {index} {read1} 2> {out}.log && mv {out}.tmp/* {out} && mv {out}.log {out} && rmdir {out}.tmp".format(python2=params.python2, threads=threads, cmd=params.cmd, opt=params.options, rg=rg, out=output.tophatdir, prefix=wildcards.prefix, index=params.index, read1=input.read1))
 
