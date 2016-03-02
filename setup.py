@@ -97,6 +97,7 @@ setup(
     scripts=scripts,
     packages=[
         'snakemake_rules',
+        'snakemake_rules.tests',
     ],
     # namespace_packages = [
     #     'snakemake',
